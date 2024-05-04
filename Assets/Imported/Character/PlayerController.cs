@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityTutorial.Manager;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 namespace UnityTutorial.PlayerControl
 {
@@ -18,6 +19,8 @@ namespace UnityTutorial.PlayerControl
         [SerializeField] private float DistanceToGround = 0.8f;
         [SerializeField] private LayerMask GroundCheck;
         [SerializeField] private float AirResistance = 0.8f;
+
+        [SerializeField] private Rigidbody shipRB;
 
         private Rigidbody _playerRigidbody;
         private InputManager _inputManager;
@@ -38,6 +41,9 @@ namespace UnityTutorial.PlayerControl
 
         private Vector2 _currentVelocity;
 
+        bool rotateLeft = false;
+        bool rotateRight = false;
+
         void Start()
         {
             _hasAnimator = TryGetComponent<Animator>(out _animator);
@@ -53,7 +59,24 @@ namespace UnityTutorial.PlayerControl
         }
         void Update()
         {
-            //CamMovement();             
+            //CamMovement();
+
+            if (Input.GetKey(KeyCode.E))
+            {
+                rotateRight = true;
+            }
+            else 
+            {
+                rotateRight = false;
+            }
+            if (Input.GetKey(KeyCode.Q))
+            {
+                rotateLeft = true;
+            }
+            else
+            {
+                rotateLeft = false;
+            }
         }
 
         void FixedUpdate()
@@ -64,6 +87,28 @@ namespace UnityTutorial.PlayerControl
             SampleGround();
             Move();
             // HandleJump();
+
+            //if(Input.GetKeyDown(KeyCode.E)) 
+            //{
+            //    shipRB.rotation = new Quaternion(shipRB.rotation.x + 1, shipRB.rotation.y, shipRB.rotation.z, shipRB.rotation.w);
+            //}
+            //if (Input.GetKeyDown(KeyCode.Q))
+            //{
+            //    shipRB.rotation = new Quaternion(shipRB.rotation.x - 1, shipRB.rotation.y, shipRB.rotation.z, shipRB.rotation.w);
+            //}
+
+            if (rotateLeft)
+            {
+                shipRB.angularVelocity = new Vector3(1 * Time.fixedDeltaTime, 0, 0);
+            }
+            else if (rotateRight)
+            {
+                shipRB.angularVelocity = new Vector3(-1 * Time.fixedDeltaTime, 0, 0);
+            }
+            //else
+            //{
+            //    shipRB.angularVelocity = new Vector3(0, 0, 0);
+            //}
         }
 
         private void Move()
