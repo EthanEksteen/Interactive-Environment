@@ -99,11 +99,11 @@ namespace UnityTutorial.PlayerControl
 
             if (rotateLeft)
             {
-                shipRB.angularVelocity = new Vector3(1 * Time.fixedDeltaTime, 0, 0);
+                shipRB.angularVelocity = new Vector3(2 * Time.fixedDeltaTime, 0, 0);
             }
             else if (rotateRight)
             {
-                shipRB.angularVelocity = new Vector3(-1 * Time.fixedDeltaTime, 0, 0);
+                shipRB.angularVelocity = new Vector3(-2 * Time.fixedDeltaTime, 0, 0);
             }
             //else
             //{
